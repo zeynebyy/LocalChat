@@ -1,0 +1,35 @@
+# JavaScript dependencies and build output
+node_modules/
+dist/
+release/
+out/
+*.log
+
+# Python environments and cache
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local conversation history
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Secrets and local editor settings
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Duplicate project copy and local analysis
+/llm_desktop_phi2/
+/ANALIZ_RAPORU.md

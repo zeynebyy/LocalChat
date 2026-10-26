@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalGPT</title>
+  <link rel="stylesheet" href="style.css?v=6" />
+</head>
+<body>
+  <div class="main-container">
+    <aside class="sidebar closed" id="sidebar">
+      <div class="sidebar-header">
+        <button id="toggle-theme" title="Gece/Gündüz Modu">🌙</button>
+        <span class="sidebar-title">LocalGPT</span>
+        <button id="sidebar-toggle" title="Menü">☰</button>
+      </div>
+
+      <div class="sidebar-buttons">
+        <button id="new-chat" title="Yeni Sohbet">📝<span>Yeni</span></button>
+        <button id="refresh-app" title="Yenile">🔄<span>Yenile</span></button>
+        <button id="show-archived" title="Arşiv">📦<span>Arşiv</span></button>
+        <button id="show-active" title="Aktif">💬<span>Aktif</span></button>
+        <button id="show-favorites" title="Favoriler">⭐<span>Favoriler</span></button>
+        <button onclick="document.getElementById('settings-panel').style.display='block'" title="Gelişmiş Ayarlar">⚙️<span>Ayarlar</span></button>
+      </div>
+
+      <!-- 🔍 Arama Kutusu -->
+      <input type="text" id="search-box" placeholder="Mesajlarda ara..." oninput="filterMessages()" />
+
+      <!-- 📝 Sohbet Listesi -->
+      <ul id="chat-list" class="chat-scroll-container">
+        <li class="conversation-item"><strong class="conversation-title">bitlis tarihini detaylı anlat</strong><br><small>22.07.2025 13:49:24</small></li>
+        <li class="conversation-item"><strong class="conversation-title">ne yemek istersin</strong><br><small>22.07.2025 13:47:49</small></li>
+        <li class="conversation-item"><strong class="conversation-title">merhaba</strong><br><small>22.07.2025 13:36:29</small></li>
+      </ul>
+    </aside>
+
+    <section class="chat-section panel-closed">
+      <div class="chat-header">
+        <h1>LocalGPT</h1>
+      </div>
+
+      <div class="chat-box" id="chat-box"></div>
+
+      <div class="input-area">
+        <textarea id="prompt" placeholder="Nasıl yardımcı olabilirim..." rows="2"></textarea>
+        <button id="send-btn">Gönder</button>
+      </div>
+
+      <div id="error-message"></div>
+    </section>
+  </div>
+
+  <!-- ⚙️ Gelişmiş Ayarlar Paneli -->
+  <div id="settings-panel" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%); background:#fff; padding:20px; border-radius:8px; box-shadow:0 0 15px rgba(0,0,0,0.3); z-index:9999; width:400px; max-width:90%;">
+    <h2>Gelişmiş Ayarlar</h2>
+
+    <label for="system-behavior"><b>Sistem Promptu:</b></label><br>
+    <textarea id="system-behavior" rows="3" style="width:100%; margin-bottom:10px;" placeholder="Asistanın nasıl davranmasını istersiniz?"></textarea>
+
+    <div class="tooltip-container">
+      <label for="temperature">Temperature:</label>
+      <input type="number" id="temperature" step="0.1" min="0" max="1" style="width:100%;">
+      <div class="tooltip-text">Yanıtların ne kadar rastgele olacağını belirler. 0: kesin, 1: yaratıcı.</div>
+    </div>
+
+    <div class="tooltip-container">
+      <label for="top_p">Top-p:</label>
+      <input type="number" id="top_p" step="0.1" min="0" max="1" style="width:100%;">
+      <div class="tooltip-text">Modelin yüksek olasılıklı kelimelerden seçim yapmasını sağlar. 1'e yakın değerler daha çeşitli yanıtlar üretir.</div>
+    </div>
+
+    <div class="tooltip-container">
+      <label for="top_k">Top-k:</label>
+      <input type="number" id="top_k" step="1" min="1" max="100" style="width:100%;">
+      <div class="tooltip-text">Modelin sadece en olası K kelime arasından seçim yapmasını sağlar. Düşük değerler daha tutarlı yanıtlar verir.</div>
+    </div>
+
+    <div class="tooltip-container">
+      <label for="repetition_penalty">Repetition Penalty:</label>
+      <input type="number" id="repetition_penalty" step="0.1" min="0.5" max="2" style="width:100%;">
+      <div class="tooltip-text">Aynı kelime veya cümlelerin tekrar edilmesini azaltır. Yüksek değer tekrarları engeller.</div>
+    </div>
+
+    <div style="margin-top:15px; display:flex; justify-content:space-between;">
+      <button onclick="saveSettings()">💾 Kaydet</button>
+      <button onclick="document.getElementById('settings-panel').style.display='none'; var p=document.getElementById('prompt'); if(p){p.disabled=false;p.readOnly=false;p.focus();}">❌ Kapat</button>
+    </div>
+  </div>
+
+  <!-- 🔍 Arama JS -->
+  <script>
+    function filterMessages() {
+      const searchInput = document.getElementById("search-box").value.toLowerCase();
+      const chats = document.querySelectorAll("#chat-list .conversation-item");
+
+      chats.forEach(chat => {
+        const title = chat.querySelector(".conversation-title").textContent.toLowerCase();
+        chat.style.display = title.includes(searchInput) ? "block" : "none";
+      });
+    }
+  </script>
+
+  <script src="script.js?v=6"></script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+/* === Temel Ayarlar === */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  color: #222;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body.dark {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+/* === Ana Konteyner === */
+.main-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* === Sidebar === */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(145deg, #232323, #2e2e2e);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.sidebar.closed {
+  width: 64px;
+  padding: 16px 8px;
+  align-items: center;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.sidebar-buttons button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.sidebar-buttons button:hover {
+  transform: scale(1.05);
+}
+
+.sidebar.closed .sidebar-title,
+.sidebar.closed .sidebar-buttons span,
+.sidebar.closed #sidebar-search,
+.sidebar.closed #chat-list {
+  display: none;
+}
+
+/* === Sidebar Arama Kutusu === */
+#sidebar-search {
+  margin-top: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
+
+body.dark #sidebar-search {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+/* === Chat Listesi === */
+#chat-list {
+  overflow-y: auto;
+  flex-grow: 1;
+  margin-top: 12px;
+  padding-right: 4px;
+}
+
+/* === Sohbet Alanı === */
+.chat-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit;
+  transition: margin-left 0.3s ease;
+}
+
+.chat-header {
+  padding: 16px;
+}
+
+.chat-header h1 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.chat-header input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.chat-box {
+  flex-grow: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* === Mesajlar === */
+.message {
+  padding: 12px 18px;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(71, 61, 61, 0.1);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 100%;
+  word-wrap: break-word;
+  width: fit-content;
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #2563eb;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: white;
+  color: black;
+  border-bottom-left-radius: 4px;
+}
+
+body.light .message.user {
+  background-color: #cde1ff;
+  color: #000;
+}
+
+body.light .message.bot {
+  background-color: #e6e6e6;
+  color: #000;
+}
+
+/* === Mesaj Girme Alanı === */
+.input-area {
+  display: flex;
+  padding: 12px;
+  background-color: #2b2b2b;
+  gap: 10px;
+}
+
+.input-area textarea {
+  flex-grow: 1;
+  resize: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: none;
+}
+
+.input-area button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.input-area button:hover {
+  background-color: #45a049;
+}
+
+/* === Sohbet Kartı Aksiyon Butonları === */
+.chat-actions button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin: 0 2px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-actions button:hover {
+  background-color: #eee;
+}
+
+.chat-actions button[title="Arşivden çıkar"] {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.chat-actions button[title="Arşivden çıkar"]:hover {
+  background-color: #ddd;
+}
+
+.chat-actions button.favorited {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+
+/* === Gelişmiş Ayarlar Modalı === */
+#settings-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#settings-modal .modal-content {
+  background-color: #fff;
+  color: #000;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+body.dark #settings-modal .modal-content {
+  background-color: #2e2e2e;
+  color: #fff;
+}
+
+#settings-modal input,
+#settings-modal textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+}
+
+#settings-modal label {
+  font-weight: bold;
+}
+
+#settings-modal .modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+#settings-modal button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+#settings-modal .save-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+#settings-modal .cancel-btn {
+  background-color: #ccc;
+  color: black;
+}
+
+/* === Mobil Uyum (Responsive) === */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .chat-section {
+    margin-left: 0 !important;
+  }
+
+  .chat-box {
+    max-width: 100%;
+    padding: 16px;
+  }
+}
+
+/* === Tooltip Ayarları === */
+.tooltip-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.tooltip-container input {
+  z-index: 1;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #333;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  white-space: nowrap;
+  font-size: 13px;
+  margin-top: 4px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(5px);
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dark tema desteği */
+body.dark .tooltip-text {
+  background-color: #ddd;
+  color: #000;
+}
+#search-box {
+  margin-top: 16px;         /* mevcutsa artır */
+  margin-bottom: 12px;      /* bu satırı EKLE → Ayarlar ile kutu arasına boşluk koyar */
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+}
